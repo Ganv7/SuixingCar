@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传文件</title>
+</head>
+
+<body>
+<input type="text" id="carId">
+<input type="file" id="file" >
+<button onclick="submit()">提交</button>
+</body>
+
+<script>
+    function submit(){
+        //利用ajax请求会存在跨域问题，但是使用form表单标签是不存在跨域的
+        var file = document.getElementById('file').files[0]
+        var carId = document.getElementById('carId').value
+        var formData = new FormData()
+        formData.append('file',file)
+        formData.append('carId',carId)
+        var xhr = new XMLHttpRequest()
+        xhr.open('POST','/file/upload')
+        //xhr.setRequestHeader("Content-type","multipart/form-data")//这行不需要加默认会自动匹配
+        xhr.send(formData)
+        xhr.onreadystatechange=function(){
+            if (xhr.status==200)
+            {
+                console.log('成功发送~')
+            }
+        }
+    }
+
+</script>
+</html>
